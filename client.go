@@ -2,9 +2,7 @@ package insurance
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
-	"time"
 )
 
 const (
@@ -34,30 +32,35 @@ type Client struct {
 // Gadgets returns current gadgets root insures
 func (client *Gadget) Gadgets() (GadgetModels, error) {
 	req, _ := http.NewRequest(http.MethodGet, client.rootURL+gadgets, nil)
+
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
+
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	start := time.Now()
 
 	records := GadgetModels{}
 	if err := json.NewDecoder(resp.Body).Decode(&records); err != nil {
 		return nil, err
 	}
-	elapsed := time.Since(start)
-	log.Printf("Binomial took %s", elapsed)
 	return records, nil
 }
 
 // Create a new root client from a api key
-func Create(apiKey string) (*Client, error) {
+func Create(apiKey string, options ...func(*Client) error) (*Client, error) {
 	client := Client{}
 	client.apiKey = apiKey
 	client.rootURL = "https://sandbox.root.co.za/v1/insurance/"
 	client.Client = &http.Client{}
 	client.Gadget = Gadget{&client}
 	client.QuoteService = &QuoteService{&client}
+	for _, opt := range options {
+		err := opt(&client)
+		if err != nil {
+			return nil, err
+		}
+	}
 	return &client, nil
 }
 
