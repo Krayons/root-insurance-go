@@ -2,6 +2,7 @@ package insurance
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -69,5 +70,9 @@ func (client *Client) Do(req *http.Request) (*http.Response, error) {
 	req.SetBasicAuth(client.apiKey, "")
 	req.Header.Set("X-Client-Header", "Go root client")
 	req.Header.Set("Content-Type", "application/json")
-	return client.Client.Do(req)
+	resp, err := client.Client.Do(req)
+	if resp.StatusCode < 200 || resp.StatusCode > 300 {
+		return nil, fmt.Errorf("Root returned an err %s", resp.Status)
+	}
+	return resp, err
 }

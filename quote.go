@@ -9,6 +9,7 @@ import (
 
 const (
 	quoteURL = "quotes"
+	gadgetID = "root_gadgets"
 )
 
 type QuoteService struct {
@@ -74,4 +75,11 @@ func (qs *QuoteService) GetGadgetQuote(request GadgetQuoteRequest) ([]GadgetQuot
 		return nil, err
 	}
 	return results, nil
+}
+
+func (qs *QuoteService) CreateQuoteRequest(modelName string) GadgetQuoteRequest {
+	quote := GadgetQuoteRequest{}
+	quote.Type = gadgetID
+	quote.ModelName = modelName
+	return quote
 }

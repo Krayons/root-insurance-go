@@ -1,5 +1,7 @@
 # A Golang Client for Root's insurance API
 
+[![Build Status](https://travis-ci.org/Krayons/root-insurance-go.svg?branch=master)
+
 # Roadmap
 ✅ - Done  🚧 - WIP
   - Authentication ✅
