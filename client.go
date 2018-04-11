@@ -26,6 +26,7 @@ type Client struct {
 	apiKey string
 	Gadget
 	*QuoteService
+	*PolicyholderService
 	*http.Client
 	rootURL string
 }
@@ -35,11 +36,12 @@ func (client *Gadget) Gadgets() (GadgetModels, error) {
 	req, _ := http.NewRequest(http.MethodGet, client.rootURL+gadgets, nil)
 
 	resp, err := client.Do(req)
-	defer resp.Body.Close()
 
 	if err != nil {
 		return nil, err
 	}
+
+	defer resp.Body.Close()
 
 	records := GadgetModels{}
 	if err := json.NewDecoder(resp.Body).Decode(&records); err != nil {
@@ -56,6 +58,7 @@ func Create(apiKey string, options ...func(*Client) error) (*Client, error) {
 	client.Client = &http.Client{}
 	client.Gadget = Gadget{&client}
 	client.QuoteService = &QuoteService{&client}
+	client.PolicyholderService = &PolicyholderService{&client}
 	for _, opt := range options {
 		err := opt(&client)
 		if err != nil {

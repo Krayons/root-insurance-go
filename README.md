@@ -1,6 +1,6 @@
 # A Golang Client for Root's insurance API
 
-[![Build Status](https://travis-ci.org/Krayons/root-insurance-go.svg?branch=master)
+![Build Status](https://travis-ci.org/Krayons/root-insurance-go.svg?branch=master)
 
 # Roadmap
 ✅ - Done  🚧 - WIP
@@ -20,7 +20,7 @@
     - Add Beneficiaries 🚧
     - Collect Premium 🚧
   - policyholders
-    - List All Policyholders 🚧
+    - List All Policyholders ✅
     - Retrieve a Policyholder 🚧
     - Retrieving Policyholder Events 🚧
     - Update a Policyholder 🚧

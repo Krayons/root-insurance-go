@@ -13,7 +13,7 @@ func init() {
 }
 
 func main() {
-	rootInsurance, err := insurance.Create("apiKey") // api key needs to be replaced
+	rootInsurance, err := insurance.Create("sandbox_ZjFhZTI3M2UtMmUzZS00ZjFkLTg1YjItNGE2M2ViMzc2MDdhLnhsaHExNTlpdkdPQmVYT3gtZVFLb2dwTmxvZk9MZ0xG") // api key needs to be replaced
 	if err != nil {
 		panic(err)
 	}
@@ -37,4 +37,18 @@ func main() {
 		fmt.Printf("Quote %d is %s\n", idx+1, quote.PackageName)
 		fmt.Printf("With a Suggested Premium of R%v/pm for the value of R%v\n", quote.SuggestedPremium/100, quote.SumAssured/100)
 	}
+	fmt.Println("Retrieving all policyholders")
+	policyholders, _ := rootInsurance.PolicyholderService.GetAllPolicyholders()
+	noHolders := len(policyholders)
+	fmt.Printf("Found %v policyholders\n", noHolders)
+	var policyholder insurance.Policyholder
+	if noHolders < 0 {
+		fmt.Println("Creating a policyholder")
+		policyholder = insurance.Policyholder{}
+	} else {
+		fmt.Println("Selecting a random policy holder")
+		policyholder = policyholders[rand.Intn(noHolders)]
+	}
+	fmt.Printf("Policyholder chosen: %s %s", policyholder.FirstName, policyholder.LastName)
+
 }
