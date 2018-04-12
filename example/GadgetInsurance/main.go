@@ -13,7 +13,7 @@ func init() {
 }
 
 func main() {
-	rootInsurance, err := insurance.Create("sandbox_ZjFhZTI3M2UtMmUzZS00ZjFkLTg1YjItNGE2M2ViMzc2MDdhLnhsaHExNTlpdkdPQmVYT3gtZVFLb2dwTmxvZk9MZ0xG") // api key needs to be replaced
+	rootInsurance, err := insurance.Create("apiKey") // api key needs to be replaced
 	if err != nil {
 		panic(err)
 	}

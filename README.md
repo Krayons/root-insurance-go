@@ -12,7 +12,7 @@
           - Term Life ✅
     - Create a Policyholder  🚧
     - Create an Application
-      - Gadgets 🚧
+      - Gadgets ✅
       - Funeral 🚧
       - Term 🚧
     - Issue the Policy 🚧
